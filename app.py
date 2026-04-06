@@ -7,6 +7,15 @@ import mysql.connector
 import os, uuid, json
 from datetime import datetime
 
+# ── TEST DATABASE CONNECTION ────────────────────────────────────────────────
+try:
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SHOW TABLES;")
+    print("Tables in database:", cur.fetchall())
+except Exception as e:
+    print("Database connection failed:", e)
+
 # Load .env file if present
 try:
     from dotenv import load_dotenv
