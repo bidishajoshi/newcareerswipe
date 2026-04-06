@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – CareerSwipe{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/swipe.css') }}">
+{% endblock %}
+{% block content %}
+<div class="dash-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar seeker-sidebar">
+    <div class="sidebar-avatar">
+      <div class="avatar-circle seeker-avatar">
+        {{ seeker.first_name[0] }}{{ seeker.last_name[0] }}
+      </div>
+      <div>
+        <strong>{{ seeker.first_name }} {{ seeker.last_name }}</strong>
+        <small>{{ seeker.email }}</small>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#swipe-section" class="sn-active">🃏 Swipe Jobs</a>
+      <a href="#applications-section">📋 My Applications</a>
+      <a href="{{ url_for('edit_seeker_profile') }}">✏️ Edit Profile</a>
+      <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </nav>
+    {% if seeker.skills %}
+    <div class="sidebar-skills">
+      <div class="sidebar-label">Your skills</div>
+      {% for skill in seeker.skills.split(',') %}
+        <span class="skill-pill seeker-pill">{{ skill.strip() }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </aside>
+
+  <!-- Main content -->
+  <main class="dash-main">
+
+    <!-- Swipe Section -->
+    <section id="swipe-section">
+      <div class="section-header">
+        <h2>Jobs for you</h2>
+        <span class="job-count">{{ jobs|length }} available</span>
+      </div>
+
+      {% if jobs %}
+      <div class="swipe-container">
+      <div class="swipe-arena">
+        <div class="swipe-stack" id="swipeStack">
+          {% for job in jobs %}
+          <div class="job-card" data-job-id="{{ job.id }}" data-index="{{ loop.index0 }}">
+            <div class="jc-top">
+              {% if job.logo_path %}
+                <img src="{{ url_for('static', filename=job.logo_path.replace('static/', '')) }}" class="jc-logo" alt="logo">
+              {% else %}
+                <div class="jc-logo-placeholder">{{ job.company_name[0] }}</div>
+              {% endif %}
+              <div>
+                <h3>{{ job.title }}</h3>
+                <span class="jc-company">{{ job.company_name }}</span>
+              </div>
+              {% if job.match_score > 0 %}
+              <div class="match-badge {% if job.match_score >= 60 %}match-high{% elif job.match_score >= 35 %}match-mid{% else %}match-low{% endif %}">
+                {{ job.match_score }}% match
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="jc-meta">
+              {% if job.location %}<span>📍 {{ job.location }}</span>{% endif %}
+              {% if job.job_type %}<span>⏱ {{ job.job_type }}</span>{% endif %}
+              {% if job.salary %}<span>💰 {{ job.salary }}</span>{% endif %}
+            </div>
+
+            <div class="jc-desc">{{ job.description[:220] }}{% if job.description|length > 220 %}…{% endif %}</div>
+
+            {% if job.required_skills %}
+            <div class="jc-skills">
+              {% for sk in job.required_skills.split(',')[:6] %}
+                <span class="skill-pill seeker-pill">{{ sk.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="swipe-hint">
+              <span class="hint-left">← Skip</span>
+              <span class="hint-right">Apply →</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Action buttons -->
+        <div class="swipe-actions">
+          <button class="swipe-btn skip-btn" id="btnSkip" title="Skip">✕</button>
+          <button class="swipe-btn apply-btn" id="btnApply" title="Apply">❤</button>
+        </div>
+
+        <!-- Result overlays -->
+        <div class="swipe-overlay overlay-skip"  id="overlaySkip">Skipped</div>
+        <div class="swipe-overlay overlay-apply" id="overlayApply">Applied! ❤</div>
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <div style="font-size:3rem">🎉</div>
+        <h3>You've seen all available jobs!</h3>
+        <p>Check back later for new listings.</p>
+      </div>
+   </div>
+      {% endif %}
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications-section" style="margin-top:3rem">
+      <div class="section-header">
+        <h2>My Applications</h2>
+        <span class="job-count">{{ applications|length }} total</span>
+      </div>
+      {% if applications %}
+      <div class="app-table-wrap">
+        <table class="app-table">
+          <thead>
+            <tr><th>Job Title</th><th>Company</th><th>Applied</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            {% for app in applications %}
+            <tr>
+              <td>{{ app.title }}</td>
+              <td>{{ app.company_name }}</td>
+              <td>{{ app.applied_at.strftime('%b %d, %Y') if app.applied_at else '—' }}</td>
+              <td>
+                <span class="status-badge status-{{ app.status }}">{{ app.status|capitalize }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty-state" style="padding:2rem">
+        <p>No applications yet. Start swiping above!</p>
+      </div>
+      {% endif %}
+    </section>
+
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/swipe.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile – CareerSwipe{% endblock %}
+{% block content %}
+<div class="auth-wrap seeker-theme">
+  <div class="auth-card">
+    <div class="auth-header">
+      <span class="role-badge badge-seeker"> Edit Profile</span>
+      <h2>Update your profile</h2>
+      <p>Keep your information fresh to improve match scores</p>
+    </div>
+    <form method="POST" enctype="multipart/form-data" class="auth-form">
+      <input type="hidden" name="existing_resume" value="{{ seeker.resume_path }}">
+
+      <div class="form-section-label">Personal info</div>
+      <div class="field-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" name="first_name" value="{{ seeker.first_name }}" required>
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" name="last_name" value="{{ seeker.last_name }}" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" name="phone" value="{{ seeker.phone or '' }}">
+      </div>
+
+      <div class="form-section-label">Education &amp; experience</div>
+      <div class="field">
+        <label>Highest qualification</label>
+        <select name="education">
+          {% for opt in ["Bachelor's degree","Master's degree","PhD","Diploma / Certificate","High school"] %}
+            <option {% if seeker.education == opt %}selected{% endif %}>{{ opt }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>Work experience</label>
+        <textarea name="experience" rows="3">{{ seeker.experience or '' }}</textarea>
+      </div>
+
+      <div class="form-section-label">Skills</div>
+      <div class="field">
+        <label>Skills (comma-separated)</label>
+        <input type="text" name="skills" value="{{ seeker.skills or '' }}">
+      </div>
+
+      <div class="form-section-label">Resume</div>
+      {% if seeker.resume_path %}
+      <div class="current-file-notice">
+         Current resume on file. Upload a new one to replace it.
+      </div>
+      {% endif %}
+      <div class="field">
+        <label class="file-upload-label seeker-upload" for="resume-input">
+         
+          <span><strong>Upload new resume</strong> or leave blank to keep current<br><small>PDF or DOC · Max 5MB</small></span>
+          <span class="file-name-display" id="resume-name">No file chosen</span>
+        </label>
+        <input type="file" name="resume" id="resume-input" accept=".pdf,.doc,.docx" style="display:none">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">Save Changes →</button>
+      <p class="auth-link"><a href="{{ url_for('seeker_dashboard') }}">← Back to dashboard</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('resume-input').addEventListener('change', function(){
+  document.getElementById('resume-name').textContent = this.files[0]?.name || 'No file chosen';
+});
+</script>
+{% endblock %}

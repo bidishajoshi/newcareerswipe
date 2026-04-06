@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Post a Job – CareerSwipe{% endblock %}
+{% block content %}
+<div class="auth-wrap company-theme">
+  <div class="auth-card">
+    <div class="auth-header company-header">
+      <span class="role-badge badge-company"> </span>
+      <h2>Post a job listing</h2>
+      <p>Reach qualified candidates instantly</p>
+    </div>
+    <form method="POST" class="auth-form">
+      <div class="field">
+        <label>Job title</label>
+        <input type="text" name="title" required placeholder=" ">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Location</label>
+          <input type="text" name="location" placeholder="Kathmandu / Remote">
+        </div>
+        <div class="field">
+          <label>Job type</label>
+          <select name="job_type">
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+            <option>Remote</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Salary range <span class="opt-label">(optional)</span></label>
+        <input type="text" name="salary" placeholder="e.g. NPR 60,000 – 90,000">
+      </div>
+      <div class="field">
+        <label>Job description</label>
+        <textarea name="description" rows="5" required placeholder="Describe the role, responsibilities, and company culture..."></textarea>
+      </div>
+      <div class="field">
+        <label>Required skills (comma-separated)</label>
+        <input type="text" name="required_skills" placeholder=" ">
+      </div>
+      <button type="submit" class="btn btn-company btn-full">Post Job →</button>
+      <p class="auth-link"><a href="{{ url_for('company_dashboard') }}" class="company-link">← Back to dashboard</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}

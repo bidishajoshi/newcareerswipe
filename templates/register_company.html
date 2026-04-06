@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Company Registration – CareerSwipe{% endblock %}
+{% block content %}
+<div class="auth-wrap company-theme">
+  <div class="auth-card">
+    <div class="auth-header company-header">
+      <span class="role-badge badge-company">🏢 /companies</span>
+      <h2>Register your company</h2>
+      <p>Post jobs and discover top talent</p>
+    </div>
+    <form method="POST" enctype="multipart/form-data" class="auth-form">
+
+      <div class="form-section-label">Company identity</div>
+      <div class="field">
+        <label>Company name</label>
+        <input type="text" name="company_name" required placeholder="e.g. Leapfrog Technology">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Official email</label>
+          <input type="email" name="email" required placeholder="hr@company.com">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" required placeholder="Min 8 characters" minlength="8">
+        </div>
+      </div>
+      <div class="field">
+        <label>Industry type</label>
+        <select name="industry">
+          <option>Information Technology</option>
+          <option>Finance &amp; Banking</option>
+          <option>Healthcare</option>
+          <option>Education</option>
+          <option>E-commerce / Retail</option>
+          <option>Manufacturing</option>
+          <option>Media &amp; Entertainment</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-section-label">About your company</div>
+      <div class="field">
+        <label>Company description</label>
+        <textarea name="description" rows="3" placeholder="Tell candidates what makes your company unique..."></textarea>
+      </div>
+      <div class="field">
+        <label>Website URL <span class="opt-label">(optional)</span></label>
+        <input type="url" name="website" placeholder="https://yourcompany.com">
+      </div>
+
+      
+
+      <div class="form-section-label">Company logo</div>
+      <div class="field">
+        <label class="file-upload-label company-upload" for="logo-input">
+          <span class="upload-icon-wrap">🏢</span>
+          <span><strong>Upload company logo</strong> or click to browse<br><small>PNG or JPG · Max 2MB</small></span>
+          <span class="file-name-display" id="logo-name">No file chosen</span>
+        </label>
+        <input type="file" name="logo" id="logo-input" accept=".png,.jpg,.jpeg" style="display:none">
+      </div>
+
+      <button type="submit" class="btn btn-company btn-full">Register Company →</button>
+      <p class="auth-link">Already registered? <a href="{{ url_for('login_company') }}" class="company-link">Sign in to dashboard</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('logo-input').addEventListener('change', function(){
+  document.getElementById('logo-name').textContent = this.files[0]?.name || 'No file chosen';
+});
+</script>
+{% endblock %}

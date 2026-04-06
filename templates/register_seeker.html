@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Job Seeker Registration – CareerSwipe{% endblock %}
+{% block content %}
+<div class="auth-wrap seeker-theme">
+  <div class="auth-card">
+    <div class="auth-header">
+      <span class="role-badge badge-seeker"> </span>
+      <h2>Create your seeker profile</h2>
+      <p>Find your perfect match in the job market</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="auth-form">
+
+      <!-- PERSONAL INFO -->
+      <div class="form-section-label">Personal info</div>
+      <div class="field-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" name="first_name" required placeholder=" ">
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" name="last_name" required placeholder=" ">
+        </div>
+      </div>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" name="email" required placeholder="ex@gmail.com">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" required placeholder="Min 8 characters" minlength="8">
+        </div>
+        <div class="field">
+          <label>Phone number</label>
+          <input type="tel" name="phone" placeholder="+977 98XXXXXXXX">
+        </div>
+      </div>
+      <div class="field">
+        <label>Location (City, Country)</label>
+        <input type="text" name="location" placeholder="Kathmandu, Nepal">
+      </div>
+
+      
+      <!-- EDUCATION & EXPERIENCE -->
+      <div class="form-section-label">Education & experience</div>
+      <div class="field">
+        <label>Highest qualification</label>
+        <select name="education">
+          <option>Bachelor's degree</option>
+          <option>Master's degree</option>
+          <option>PhD</option>
+          <option>Diploma / Certificate</option>
+          <option>High school</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Work experience summary</label>
+        <textarea name="experience" rows="3" placeholder="e.g. 3 years as a frontend developer at Leapfrog Technology..."></textarea>
+      </div>
+
+      <!-- JOB PREFERENCES -->
+      <div class="form-section-label">Job preferences</div>
+      <div class="field">
+        <label>Desired job roles</label>
+        <input type="text" name="desired_roles" placeholder="Frontend Developer, Data Analyst...">
+      </div>
+      <div class="field">
+        <label>Preferred employment type</label>
+        <select name="employment_type">
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Internship</option>
+          <option>Contract</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Salary expectation (annual)</label>
+          <input type="number" name="salary" placeholder="e.g. 500000" min="0">
+        </div>
+        <div class="field">
+          <label>Availability</label>
+          <select name="availability">
+            <option>Immediate</option>
+            <option>Within 1 month</option>
+            <option>Within 3 months</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SKILLS & PORTFOLIO -->
+      <div class="form-section-label">Skills & portfolio</div>
+      <div class="field">
+        <label>Skills (comma-separated)</label>
+        <input type="text" name="skills" placeholder="React, Python, SQL, Docker...">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>LinkedIn profile</label>
+          <input type="url" name="linkedin" placeholder="https://linkedin.com/in/username">
+        </div>
+        <div class="field">
+          <label>GitHub / Portfolio</label>
+          <input type="url" name="portfolio" placeholder="https://github.com/username">
+        </div>
+      </div>
+
+      <!-- RESUME UPLOAD -->
+      <div class="form-section-label">Resume upload</div>
+      <div class="field">
+        <label class="file-upload-label seeker-upload" for="resume-input">
+          <span class="upload-icon-wrap"></span>
+          <span><strong>Drop your resume here</strong> or click to browse<br><small>PDF or DOC · Max 5MB</small></span>
+          <span class="file-name-display" id="resume-name">No file chosen</span>
+        </label>
+        <input type="file" name="resume" id="resume-input" accept=".pdf,.doc,.docx" style="display:none">
+      </div>
+
+
+      <button type="submit" class="btn btn-primary btn-full">Create Seeker Account →</button>
+      <p class="auth-link">Already have an account? <a href="{{ url_for('login_seeker') }}">Sign in</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('resume-input').addEventListener('change', function(){
+  document.getElementById('resume-name').textContent = this.files[0]?.name || 'No file chosen';
+});
+</script>
+{% endblock %}

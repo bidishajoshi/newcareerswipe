@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}CareerSwipe – Swipe. Match. Hire.{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Find your dream job<br><span>with a single swipe</span></h1>
+    <p>CareerSwipe matches your skills to the best jobs using resume analysis. Swipe right to apply, left to skip.</p>
+    <div class="hero-btns">
+      <a href="{{ url_for('register_seeker') }}" class="btn btn-primary">I'm a Job Seeker</a>
+      <a href="{{ url_for('register_company') }}" class="btn btn-company">I'm Hiring</a>
+    </div>
+  </div>
+  <div class="hero-card-stack">
+    <div class="demo-card dc3"><span>💼</span><b>UX Designer</b><small>TechCo · Remote</small></div>
+    <div class="demo-card dc2"><span>🧑‍💻</span><b>Backend Dev</b><small>Leapfrog · Kathmandu</small></div>
+    <div class="demo-card dc1"><span>📊</span><b>Data Analyst</b><small>CloudBase · Full-time</small></div>
+  </div>
+</section>
+
+
+{% endblock %}

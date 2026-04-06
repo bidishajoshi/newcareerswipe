@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Company Login – CareerSwipe{% endblock %}
+{% block content %}
+<div class="auth-wrap company-theme">
+  <div class="auth-card" style="max-width:420px">
+    <div class="auth-header company-header">
+      
+      <h2>Recruiter sign in</h2>
+      <p>Access your company dashboard</p>
+    </div>
+    <form method="POST" class="auth-form">
+      <div class="field">
+        <label>Official email</label>
+        <input type="email" name="email" required autofocus>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-company btn-full">Sign In →</button>
+      <p class="auth-link">New company? <a href="{{ url_for('register_company') }}" class="company-link">Register here</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
