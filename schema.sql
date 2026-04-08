@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS companies (
 ) ENGINE=InnoDB;
 
 -- ─── Jobs ────────────────────────────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS jobs (
+CREATE TABLE IF NOT EXISTS job_listings (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     company_id      INT NOT NULL,
     title           VARCHAR(255) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 ) ENGINE=InnoDB;
 
 -- ─── Swipes ──────────────────────────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS swipes (
+CREATE TABLE IF NOT EXISTS job_swipes (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     seeker_id   INT NOT NULL,
     job_id      INT NOT NULL,

@@ -7,6 +7,15 @@ import mysql.connector
 import os, uuid, json
 from datetime import datetime
 
+# ── TEST DATABASE CONNECTION ────────────────────────────────────────────────
+try:
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SHOW TABLES;")
+    print("Tables in database:", cur.fetchall())
+except Exception as e:
+    print("Database connection failed:", e)
+
 # Load .env file if present
 try:
     from dotenv import load_dotenv
@@ -18,10 +27,15 @@ from utils.tfidf import parse_resume, match_resume_to_job
 from utils.db import get_db, init_app as init_db
 
 app = Flask(__name__)
+@app.errorhandler(Exception)
+def handle_exception(e):
+    import traceback
+    traceback.print_exc()   #  shows full error in terminal
+    return "Internal Server Error - check terminal", 500
 app.secret_key = os.environ.get("SECRET_KEY", "careerswipe-secret-2026")
 init_db(app)
 
-# ── Mail config (Used for job applications and status updates) ───────────────
+#  Mail config (Used for job applications and status updates) 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
