@@ -160,6 +160,7 @@ To enable emails:
 | `/jobs/post` | GET/POST | Post a new job |
 | `/applicant/<id>/<action>` | GET | Accept or reject applicant |
 
+
 ---
 
 ## Customisation Tips
