@@ -1,4 +1,4 @@
-/* ── CareerSwipe · main.css ─────────────────────────────────────────────── */
+
 :root {
   --seeker: #e94560;
   --seeker-light: #fde8ee;
@@ -25,7 +25,6 @@ body {
   flex-direction: column;
 }
 
-/* ── Navbar ─────────────────────────────────────────────────────────────── */
 .navbar {
   background: #1a1a2e;
   padding: 0 2rem;
@@ -62,7 +61,7 @@ body {
   font-size: 13px !important;
 }
 
-/* ── Flash messages ──────────────────────────────────────────────────────── */
+
 .flash-wrap { display: flex; flex-direction: column; gap: 8px; padding: 12px 2rem 0; }
 .flash {
   padding: 12px 16px;
